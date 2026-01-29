@@ -15,7 +15,7 @@ setup(
                 "kernels/equalize_hist.cu",
                 "kernels/module.cpp",
             ],
-            extra_compile_args={"cxx": ["-O2"]},
+            extra_compile_args={"cxx": ["-O2"],"nvcc": ["-O3", "--expt-relaxed-constexpr", "--expt-extended-lambda"]},
         ),
     ],
     cmdclass={"build_ext": BuildExtension},

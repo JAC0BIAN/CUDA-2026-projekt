@@ -14,6 +14,7 @@ def benchmark_equalize_hist(sizes=[1024, 2048, 4096], runs=50):
 
         img_np = np.random.randint(0, 256, (size, size), dtype=np.uint8)
         img_torch = torch.from_numpy(img_np).cuda()
+        mask_torch = torch.ones_like(img_torch)
 
         start = time.perf_counter()
         for _ in range(runs):
@@ -25,7 +26,7 @@ def benchmark_equalize_hist(sizes=[1024, 2048, 4096], runs=50):
         torch.cuda.synchronize()
         start = time.perf_counter()
         for _ in range(runs):
-            _ = fastcv.equalize(img_torch)
+            _ = fastcv.equalize(img_torch, mask_torch)
         torch.cuda.synchronize()
         end = time.perf_counter()
         fc_time = (end - start) / runs * 1000  # ms per run
