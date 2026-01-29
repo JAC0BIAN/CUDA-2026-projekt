@@ -6,7 +6,7 @@ import fastcv
 import numpy as np
 
 
-def benchmark_equalize_hist(sizes=[1024, 2048, 4096], runs=50):
+def benchmark_equalize_hist(sizes=[1024, 2048, 4096, 8192], runs=50):
     results = []
 
     for size in sizes:
@@ -32,7 +32,7 @@ def benchmark_equalize_hist(sizes=[1024, 2048, 4096], runs=50):
         fc_time = (end - start) / runs * 1000  # ms per run
 
         results.append((size, cv_time, fc_time))
-        print(f"OpenCV (CPU): {cv_time:.4f} ms | project_CUDA (CUDA): {fc_time:.4f} ms")
+        print(f"OpenCV (CPU): {cv_time:.4f} ms | fastcv (CUDA): {fc_time:.4f} ms")
 
     return results
 
@@ -40,6 +40,6 @@ def benchmark_equalize_hist(sizes=[1024, 2048, 4096], runs=50):
 if __name__ == "__main__":
     results = benchmark_equalize_hist()
     print("\n=== Final Results ===")
-    print("Size\t\tOpenCV (CPU)\tproject_CUDA (CUDA)")
+    print("Size\t\tOpenCV (CPU)\tfastcv (CUDA)")
     for size, cv_time, fc_time in results:
         print(f"{size}x{size}\t{cv_time:.4f} ms\t{fc_time:.4f} ms")
